@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facture N°{{ order.id }}</title>
+    <style>
+      
+        body { 
+            font-family: 'Helvetica', sans-serif; 
+            font-size: 10pt;
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+    
+        .invoice-table th, .invoice-table td { 
+            padding: 0.75rem; 
+            border: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+        .invoice-table th {
+            background-color: #f5f5f5;
+            text-align: left;
+            font-weight: bold;
+        }
+      
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+        .header-section { margin-bottom: 20px; }
+        .footer-totals div { padding: 3px 0; }
+        .border-bottom-thin { border-bottom: 1px solid #333; }
+        
+       
+        .primary-color { color: #007bff; } 
+        .logo-title { 
+            font-size: 18pt; 
+            font-weight: bold; 
+            color: #333; 
+            margin: 0;
+        }
+        .section-title {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="header-section">
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 55%;">
+                    <p class="logo-title">LA BOUTIQUE SHOP-ONLINE</p>
+                    <address style="font-style: normal; margin-top: 5px; line-height: 1.4;">
+                        mon-adresse <br>
+                        0000 Ville, France <br>
+                        <span class="primary-color">email@laboutique-shope-online.com</span>
+                    </address>
+                </td>
+                
+                <td style="width: 45%;" class="text-right">
+                    <h1 style="font-size: 20pt; color: #007bff; margin: 0 0 5px 0;">FACTURE</h1>
+                    <p style="margin: 0; font-size: 12pt;">
+                        N° de Commande: <strong class="primary-color">{{ order.id }}</strong>
+                    </p>
+                    <p style="margin: 0;">
+                        Date: {{ order.createdAt|date("d/m/Y") }}
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+        <hr style="border: 0; border-top: 2px solid #333; margin: 15px 0;">
+        
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 50%;">
+                    <div class="section-title">Facturé à:</div>
+                    
+                    <address style="font-style: normal; line-height: 1.4;">
+                    
+                        {{ order.delivery|raw }} 
+                    </address>
+                </td>
+                <td style="width: 50%;" class="text-right">
+                    
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section-title">Détails de la commande</div>
+    <table class="invoice-table">
+        <thead>
+            <tr>
+                <th class="text-left" style="width: 40%;">Produit</th>
+                <th class="text-center" style="width: 10%;">Qté</th>
+                <th class="text-right" style="width: 15%;">Prix Unitaire H.T.</th>
+                <th class="text-right" style="width: 10%;">TVA</th>
+                <th class="text-right" style="width: 25%;">Total T.T.C.</th>
+            </tr>
+        </thead>
+        <tbody>
+      
+            
+             {% for product in order.orederDetails %}
+                <tr>
+                    <td class="text-left">{{ product.productName }}</td>
+                    <td class="text-center">{{ product.productQuantity }}</td>
+                    <td class="text-right">{{ product.productPrice|price }}</td>
+                    <td class="text-right">{{ product.productTva }}%</td>
+                    
+                    {% set coeff = 1 + (product.productTva / 100) %}
+                    {% set totalTtc = (product.productPrice * coeff) * product.productQuantity %}
+                    
+                    <td class="text-right">{{ totalTtc|price }}</td>
+                </tr>
+            {% endfor %}
+            
+    
+            <tr>
+                <td class="text-left" style="font-style: italic;">Frais de livraison ({{ order.carrierName }})</td>
+                <td class="text-center">1</td>
+                <td class="text-right">
+                
+                    {% if order.carrierTva is defined and order.carrierTva > 0 %}
+                        {% set carrierHt = order.carrierPrice / (1 + (order.carrierTva / 100)) %}
+                        {{ carrierHt|price }}
+                    {% else %}
+                        {{ order.carrierPrice|price }} 
+                    {% endif %}
+                </td>
+              
+                <td class="text-right">{% if order.carrierTva is defined %}{{ order.carrierTva }}%{% else %}-{% endif %}</td> 
+                <td class="text-right">{{ order.carrierPrice|price }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer-totals" style="width: 40%; margin-left: auto; margin-top: 15px; border: 2px solid #e0e0e0; padding: 10px; background-color: #f9f9f9;">
+        
+        <div class="text-right">
+            <strong style="width: 50%; display: inline-block;">Total H.T. :</strong>
+            <span style="width: 45%; display: inline-block;">{{ (order.totalWt - order.totalTva)|price }}</span>
+        </div>
+        
+        <div class="text-right">
+            <strong style="width: 50%; display: inline-block;">Total T.V.A. :</strong>
+            <span style="width: 45%; display: inline-block;">{{ order.totalTva|price }}</span>
+        </div>
+        
+        <div class="text-right" style="font-size: 12pt; border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px;"> 
+            <strong style="width: 50%; display: inline-block; color: #007bff;">TOTAL À PAYER T.T.C. :</strong>
+            <span style="width: 45%; display: inline-block; font-weight: bold; color: #007bff;">{{ order.totalWt|price }}</span>
+        </div>
+    </div>
+    
+    <div class="text-center" style="position: fixed; bottom: 30px; width: 100%; font-size: 8pt; color: #888;">
+        <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 15px 25%;">
+        Merci de votre commande ! | En application de l'article 293 B du CGI, TVA non applicable.
+    </div>
+
+</body>
+
+</html>

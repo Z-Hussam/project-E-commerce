@@ -1,0 +1,46 @@
+
+<div class="card shadow-sm rounded-4 mb-5">
+    
+    <div class="card-header  bg-dark bg-opacity-75  text-white rounded-top-4 py-3">
+        <h5 class="mb-0 fw-bold"><i class="bi bi-person-circle me-2"></i> Mon Compte</h5>
+    </div>
+
+    <div class="list-group list-group-flush account-menu-hover-group">
+        
+        <a class="list-group-item list-group-item-action py-3 fw-medium  " href="{{path('app_account')}}">
+            <i class="bi bi-basket me-3 text-secondary"></i> Mes commandes
+        </a>
+        
+        <a class="list-group-item list-group-item-action py-3 fw-medium " href="{{path('app_account_addresses')}}">
+            <i class="bi bi-geo-alt me-3 text-secondary"></i> Mes adresses
+        </a>
+        
+        <a class="list-group-item list-group-item-action py-3 fw-medium  " href="{{path('app_account_wish_list')}}">
+            <i class="bi bi-heart me-3 text-secondary"></i> Ma liste de souhaits
+        </a>
+        
+        <a href="{{path('app_account_modify_pwd')}}" class="list-group-item list-group-item-action py-3 fw-medium  ">
+            <i class="bi bi-lock me-3 text-secondary"></i> Modifier mot de passe
+        </a>
+
+        {% if is_granted('ROLE_ADMIN') %}
+
+            <a href="{{path('admin')}}" class="list-group-item list-group-item-action py-3 fw-medium  text-secondary">
+                <i class="bi bi-shield-lock-fill me-3 text-secondary"></i> Administration
+            </a>
+
+        {% endif %}
+        
+        <div class="list-group-item border-top p-0">
+           
+            
+            <a href="{{path('app_logout')}}" class="list-group-item list-group-item-action py-3 text-dark fw-medium  ">
+                <i class="bi bi-box-arrow-right me-3"></i> Déconnexion
+            </a>
+			
+        </div>
+    </div>
+</div>
+<style>
+
+</style>

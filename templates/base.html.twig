@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="fr" data-bs-theme="auto">
+
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>
+			{% block title %}Online-Shop
+			{% endblock %}
+		</title>
+		<meta name="description" content="">
+
+
+		<!-- Styles personnalisés pour ce template -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+		<link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
+		{# <link href="{{asset('assets/css/carousel.css')}}" rel="stylesheet"> #}
+	</head>
+
+	<body>
+
+		<header clss=''>
+			<nav class="navbar navbar-expand-md fixed-top bg-dark
+			 {# bg-dark bg-opacity-75  #}
+			 backdrop-blur shadow-sm py-1 navbar-dark">
+				<div class="container-fluid">
+					<a class="navbar-brand mx-3 fw-bold" href="{{ path('app_home') }}">
+						{% include "/logo/logo.html.twig" %}
+					</a>
+
+					<!-- Mobile Toggle -->
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<!-- Collapsible Menu -->
+					<div
+						class="collapse navbar-collapse justify-content-between" id="navbarMain">
+						
+						<!-- SIDE MENU -->
+						<ul class="navbar-nav mb-2 mb-md-0">
+							<li class="nav-item">
+								<a href="{{ path('app_products') }}" class="nav-link">Nos produits</a>
+							</li>
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarCategoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Nos catégories
+								</a>
+								<ul class="dropdown-menu shadow rounded-3 border-0 mt-2  text-center text-capitalize " aria-labelledby="navbarCategoryDropdown">
+									{% for category in allCategories %}
+										<li>
+											<a class="dropdown-item py-1  " href="{{ path('app_category', { slug: category.slug }) }}">
+												{{ category.name }}
+											</a>
+										</li>
+									{% endfor %}
+								</ul>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('app_about') }}">À propos</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
+							</li>
+						</ul>
+
+						<!-- RIGHT SIDE MENU -->
+						<div class="d-flex align-items-center gap-3 flex-wrap mt-3 mt-md-0">
+							{% if app.user %}
+								<div class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle small text-uppercase text-white" href="#" id="navbarAccountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Bonjour
+										{{ app.user.firstname }}
+									</a>
+									<ul class="dropdown-menu dropdown-menu-end shadow rounded-3 border-0 mt-2" aria-labelledby="navbarAccountDropdown">
+										<li>
+											<a class="dropdown-item" href="{{ path('app_account') }}">Mon compte</a>
+										</li>
+
+										<li>
+											<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+										</li>
+
+										{% if is_granted('ROLE_ADMIN') %}
+											<li>
+												<a class="dropdown-item" href="{{ path('admin') }}">Administration</a>
+											</li>
+										{% endif %}
+
+									</ul>
+
+								</div>
+
+								<a href="{{ path('app_account_wish_list') }}" class="btn btn-outline-light btn-sm rounded-circle position-relative">
+									
+									<i data-feather="heart"></i>
+								</a>
+							{% else %}
+								<a href="{{ path('app_login') }}" class="nav-link d-flex align-items-center gap-1 text-white">
+									
+									<i data-feather="user"></i>
+									<span >Connexion</span>
+								</a>
+							{% endif %}
+
+							<a href="{{ path('app_cart') }}" class="btn btn-outline-light btn-sm rounded-circle position-relative">
+								<i data-feather="shopping-cart"></i>
+
+								{% if fullCartQuantity > 0 %}
+									<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+										{{ fullCartQuantity }}
+									</span>
+								{% endif %}
+							</a>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+
+		<main>
+			<div class="container mt-5">
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class=" alert alert-{{ label }}  mt-5">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+			</div>
+
+
+			{% block body %}
+				<div class="container">
+				
+				</div>
+
+			{% endblock body %}
+		</main>
+
+		<!-- FOOTER -->
+		{% block footer %}
+
+			<footer class="footer bg-dark 
+			{# bg-opacity-75 #}
+			backdrop-blur shadow-sm text-light mt-0 pt-5 pb-4">
+				<div class="container footer-container">
+					<div class="row gy-4">
+						<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="footer__about">
+								<div class="footer__logo mb-3"></div>
+								<p>Votre boutique en ligne de confiance  mode, accessoires et plus encore.</p>
+							</div>
+						</div>
+
+						<div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+							<div class="footer__widget">
+								<h6>Shopping</h6>
+								<ul class="list-unstyled">
+									<li>
+										<a href="#" class='text-white text-decoration-none'>Clothing Store</a>
+									</li>
+									<li>
+										<a href="#" class='text-white text-decoration-none'>Trending Shoes</a>
+									</li>
+									<li>
+										<a href="#" class='text-white text-decoration-none'>Accessories</a>
+									</li>
+									<li>
+										<a href="#" class='text-white text-decoration-none'>Sale</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="col-lg-2 col-md-3 col-sm-6">
+							<div class="footer__widget">
+								<h6 class='text-white'>Service Client</h6>
+								<ul class="list-unstyled">
+									<li>
+										<h6><a href="{{ path('app_contact') }}" class='text-white text-decoration-none'>Nous contacter</a></h6>
+									</li>
+									<li>
+										<h4>
+
+											<a href="{{path('app_f_a_q')}}" class='text-white text-decoration-none'>FAQ</a>
+										</h5>
+									</li>
+
+								</ul>
+							</div>
+						</div>
+
+						<div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+							<div class="footer__widget">
+								<h6>Newsletter</h6>
+								<div class="footer__newslatter">
+									<form action="#">
+										<input type="email" 
+										placeholder="Votre email" 
+										style="padding:5px; border-radius:8px; text-align:center;"
+									>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row mt-4">
+						<div class="col text-center">
+							<div class="footer__copyright__text">
+								<p class="m-0 small">
+									&copy;
+									<script>
+										document.write(new Date().getFullYear());
+									</script>
+									VotreSite — Tous droits réservés.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+
+
+		{% endblock %}
+		
+		
+		
+		<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+			<script src="https://unpkg.com/feather-icons"></script>
+		 <script>feather.replace(); // This converts <i data-feather="user"></i> into the SVG code.</script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="..." crossorigin="anonymous"></script>
+
+	</body>
+</html>
+

@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Questions Fréquemment Posées (FAQ)
+{% endblock %}
+
+{% block body %}
+
+	<div
+		class="container my-5 py-3">
+
+		{# --- Header Section --- #}
+		<div class="text-center mb-5">
+			<h1 class="display-5 fw-bold text-dark mb-1">F.A.Q.</h1>
+			<p class="text-muted lead">Toutes les questions que vous vous posez sur nos produits et services.</p>
+		</div>
+
+		
+		
+		<div class="row justify-content-center mb-5">
+			<div class="col-md-8">
+				{{ form_start(form, {'attr': {'class': ''}}) }}
+
+
+				{{ form_end(form) }}
+			</div>
+		</div>
+
+		
+		<div class="row justify-content-center">
+			<div class="col-md-10 col-lg-8">
+
+				{% if askedQuestions|length == 0 %}
+					<div class="alert alert-info text-center" role="alert">
+						Aucune question trouvée. N'hésitez pas à poser vos questions ici si vous en avez.
+					</div>
+				{% else %}
+
+		
+					<div class="accordion accordion-flush shadow-lg rounded-3" id="faqAccordion">
+
+						{% for question in askedQuestions %}
+							{% if question.answer > 0 %}
+
+
+								{% set questionId = 'collapse-' ~ loop.index %}
+
+								<div
+									class="accordion-item rounded-3">
+
+									
+									<h2 class="accordion-header" id="heading-{{ loop.index }}">
+										<button class="accordion-button {% if loop.index > 1 %}collapsed{% endif %} fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#{{ questionId }}" aria-expanded="{% if loop.first %}true{% else %}false{% endif %}" aria-controls="{{ questionId }}">
+											Q:
+											{{ question.question }}
+										</button>
+									</h2>
+
+									
+									<div id="{{ questionId }}" class="accordion-collapse collapse {% if loop.first %}show{% endif %}" aria-labelledby="heading-{{ loop.index }}" data-bs-parent="#faqAccordion">
+										<div class="accordion-body text-secondary">
+											A:
+											{{ question.answer|raw }}
+										</div>
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %}
+
+					</div>
+				{% endif %}
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

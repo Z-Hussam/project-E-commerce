@@ -1,0 +1,174 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container my-5 py-3">
+        <div class="row g-4">
+            <small>
+					<i>
+						<a href="{{path('app_category',{slug : product.category.slug})}}">{{product.category.name}}
+						</a>
+						>
+						{{product.name}}</i>
+
+				</small>
+            
+            <div class="col-md-6">
+                <img src="/uploads/{{product.illustration}}" 
+                     alt="{{product.name}}" 
+                     class="img-fluid shadow-sm rounded-3 w-100" 
+                     style="max-height: 450px; object-fit: cover;">
+            </div>
+            
+            
+            <div class="col-md-6 d-flex flex-column">
+                
+                {# Breadcrumb / catégorie Info #}
+                <small class="text-muted mb-2">
+                    <i class="bi bi-tag-fill me-1"></i>
+                    <a href="{{path('app_category',{slug : product.category.slug})}}" class="text-decoration-none text-muted">
+                        {{product.category.name}}
+                    </a>
+                </small>
+                
+                {# Nom et prix du produit#}
+                <h1 class="fw-bolder text-dark mb-2">{{product.name}}</h1>
+                <span class="d-block mb-4 h3 fw-bold text-secondary">{{product.priceWt|price }}</span>
+                
+                {# Description #}
+                <p class="mb-5 text-secondary lead">{{product.description|raw}}</p>
+
+
+                
+                <div class="d-flex align-items-center mt-auto pt-3 border-top">
+                    
+                    {# Bouton ajouter au panier#}
+                    <a href="{{path('app_cart_add',{id:product.id})}}" 
+                       class="btn btn-secondary fw-bold flex-grow-1 me-3 py-2">
+                       <i class="bi bi-cart-plus me-2"></i> Ajouter au panier
+                    </a>
+                    
+
+                    {% if app.user %}
+                        {# {% set icon_classes = "btn btn-lg" %} #}
+
+                        {% if product in app.user.wishlists %}
+                            
+                            <a href="{{path('app_account_wish_list_remove',{id:product.id})}}" 
+                               class="btn btn-lg  btn-danger" 
+                               title="Retirer de ma liste">
+                                <i class="bi bi-heart-fill"></i>
+                                
+                            </a>
+                        {% else %}
+                            
+                            <a href="{{path('app_account_wish_list_add',{id:product.id})}}" 
+                               class="{ btn btn-lg btn-outline-danger" 
+                               title="Ajouter à ma liste">
+                                <i class="bi bi-heart"></i>
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <a data-bs-toggle="collapse" 
+                           href="#collapseExample" 
+                           role="button" 
+                           aria-expanded="false" 
+                           aria-controls="collapseExample" 
+                           class="btn btn-lg btn-outline-secondary"
+                           title="Connectez-vous pour la wishlist">
+                            <i class="bi bi-heart"></i>
+                        </a>
+                    {% endif %}
+                </div>
+
+                
+                <div class="collapse" id="collapseExample">
+                    <div class="alert alert-info mt-3 p-2 small">
+                        Pour utiliser la wishlist,
+                        <a href="{{path('app_login')}}" class="alert-link fw-bold">connectez-vous</a>
+                        ou
+                        <a href="{{path('app_inscription')}}" class="alert-link fw-bold">créez votre compte client</a>.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <hr class="my-5">
+        
+        
+        {# Section des commentaires  #}
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-dark border-bottom pb-2 mb-4">Commentaires ({{ comments|length }})</h3>
+            {% for comment in comments %}
+            {% if  comment.author != app.user %}
+              {# Ajouter un lien de commentaire#}
+                <div class="mb-4">
+                    <a href="{{ path('app_comments', { productId:product.id }) }}" class="btn btn-sm btn-outline-secondary fw-bold">
+                        <i class="bi bi-chat-left-text me-1"></i> Ajouter un commentaire
+                    </a>
+                </div>
+            {% endif %}
+                
+            {% endfor %}
+              
+
+                {% if comments|length == 0 %}
+                    <div class="alert alert-light text-center" role="alert">
+                        <p class="mb-0">Il n'y a pas encore de commentaires sur ce produit. Soyez le premier !</p>
+                    </div>
+                {% else %}
+                    {# Liste des commentaires #}
+                    {% for comment in comments %}
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    {# Avatar Placeholder #}
+                                  
+
+                                         <div class="avatar-icon m-2" 
+                                            style="width: 50px;
+                                            height: 50px;
+                                            border-radius: 50%;
+                                            background-color: #f0f0f0;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;" >
+                                          <i data-feather="user"></i>
+                                        </div>
+
+
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <h6 class="mb-0 fw-bold">{{ comment.author }}</h6>
+                                            <small class="text-muted">{{ comment.createdAt|date('d-m-Y') }}</small>
+                                        </div>
+                                        
+                                        <p class="card-text text-dark">{{ comment.content }}</p>
+
+                                        {% if comment.author == app.user %}
+                                        
+                                        <div class="text-end">
+                                            <a href="{{path('app_comments_modify',{commentId: comment.id})}}" 
+                                               class="text-primary me-2 small text-decoration-none" 
+                                               title="Modifier">
+                                                <i class="bi bi-pencil-square"></i> Modifier
+                                            </a>
+                                            <a href="{{path('app_comment_delete',{commentId: comment.id})}}" 
+                                               class="text-danger small text-decoration-none" 
+                                               title="Supprimer">
+                                                <i class="bi bi-trash-fill"></i> Supprimer
+                                            </a>
+                                        </div>
+                                                {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %} 
+            </div>
+        </div>
+    </div>
+{% endblock %}

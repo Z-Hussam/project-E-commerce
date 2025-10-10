@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block body %}
+	<div class="container text-center">
+		
+		<h1 class=' mt-5'>Mercie pour votre commande</h1>
+
+		<a href="{{path('app_account_order',{id_order:order.id})}}">Consulter ma commande
+		</a>
+
+	</div>
+{% endblock body %}
+

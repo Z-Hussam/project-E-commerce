@@ -1,0 +1,89 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Finaliser ma commande{% endblock %}
+
+{% block body %}
+    <div class="container my-5 py-4">
+        
+        <div class="text-center mb-5">
+            <h2 class="fw-bolder text-dark">Finalisation de la Commande</h2>
+            <div class="d-flex justify-content-center align-items-center my-3">
+                <span class="badge text-bg-secondary rounded-pill me-2">1</span> 
+                <span class="fw-bold text-secondary me-4">Livraison</span>
+                <span class="badge text-bg-light text-muted border rounded-pill me-2">2</span> 
+                <span class="text-muted">Paiement</span>
+            </div>
+            <p class="lead text-muted mx-auto" style="max-width: 600px;">
+                Veuillez sélectionner votre adresse pour continuer vers la page de paiement.
+            </p>
+        </div>
+
+        <div class="row g-5">
+            
+
+            <div class="col-12 col-lg-7">
+                <div class="p-4 border rounded-4 bg-white shadow-sm">
+                    <h4 class="fw-bold mb-4 text-secondary">Adresse & Transporteur</h4>
+                    
+                    {{ form_start(deliverForm, { attr: { id: 'delivery-form' }, action: path('app_summary') }) }}
+
+                        <fieldset class="mb-5">
+                    <div class="form-group mb-3" style="max-width: 100%; overflow-x: hidden;">
+                                Votre adresse de livraison
+                            </legend>
+
+                            <div class="form-group mb-3">
+                                {{ form_widget(deliverForm.addresses) }}
+                                {{ form_errors(deliverForm.addresses) }}
+                            </div>
+
+                            <div class="mt-4">
+                                <a href="{{ path('app_account_addresses_form') }}" class="btn btn-outline-secondary btn-sm">
+                                    <i class="bi bi-plus-circle-fill me-2"></i> Ajouter une nouvelle adresse
+                                </a>
+                            </div>
+                        </fieldset>
+                        
+                        {% if deliverForm.carriers is defined %}
+                        <fieldset class="mb-4 pt-4 border-top">
+                            <legend class="h5 fw-semibold mb-3 border-bottom pb-2">
+                                Choix du mode de livraison
+                            </legend>
+                    <div class="form-group" style="max-width: 100%; overflow-x: hidden;">
+                                {{ form_widget(deliverForm.carriers) }}
+                                {{ form_errors(deliverForm.carriers) }}
+                            </div>
+                        </fieldset>
+                        {% endif %}
+                        
+                 
+                        
+                    {{ form_end(deliverForm) }}
+                </div>
+            </div>
+
+
+
+            <div class="col-12 col-lg-5">
+                <div class="card rounded-4 shadow-lg p-4 bg-light sticky-top" style="top: 2rem;">
+                    
+                    <h4 class="card-title fw-bold mb-4 text-dark border-bottom pb-2">Résumé de la commande</h4>
+                    
+                
+                    
+                    <div class="d-flex justify-content-between pt-3 border-top mt-3">
+                        <span class="fw-bold fs-5">Total à payer</span>
+                        
+                        <span class="fw-bolder fs-5 text-secondary">{{ estimatedTotal|default(totalWt)|price }}</span>
+                    </div>
+
+                    <p class="small text-muted mt-4 mb-0">
+                        En cliquant sur "Confirmer et Continuer", vous passerez à la page de paiement sécurisé.
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}

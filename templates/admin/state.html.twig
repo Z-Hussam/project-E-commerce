@@ -1,0 +1,14 @@
+{# field.valu est la valeur du champ state #}
+{% if field.value == 1 %}
+	<span class=" badge text-bg-secondary">En attante de paiment</span>
+{% elseif field.value == 2 %}
+	<span class=" badge text-bg-primary">Payé</span>
+{% elseif field.value == 3 %}
+	<span class=" badge text-bg-info  ">En cours de préparation</span>
+{% elseif field.value == 4 %}
+	<span class=" badge text-bg-success ">Expédiée</span>
+{% elseif field.value == 5 %}
+<span class=" badge text-bg-danger"> Annulée</span>
+{% elseif field.value == 6 %}
+<span class=" badge text-bg-success"> Livrée</span>
+{% endif %}

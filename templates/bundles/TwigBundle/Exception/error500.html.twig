@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class=" container mx-auto my-1">
+		<h1>Page introuvable</h1>
+
+		<p>
+			Désolé, cette page ne semble pas accessible pour le moment
+			<a class="btn btn-info" href="{{ path('app_home') }}">Revenir à l'accueil
+			</a>.
+		</p>
+	</div>
+{% endblock %}
+

@@ -1,0 +1,7 @@
+{
+  "twig-language.braceStyle": "expand",
+  "twig-language.functionName": true,
+  "twigCodeSnippets.enableContribute": true,
+  "twigCodeSnippets.enableCraft": true,
+  "twigCodeSnippets.enableDrupal": true
+}

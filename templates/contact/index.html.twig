@@ -1,0 +1,96 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Nous contacter | Online-Shop{% endblock %}
+
+{% block body %}
+<div class="container my-5 py-5">
+    <div class="text-center mb-5">
+        <span class="text-uppercase text-secondary fw-bold letter-spacing-2">Nous sommes là pour vous</span>
+        <h2 class="display-5 fw-bolder text-dark mt-2 mb-3">Contactez-nous</h2>
+        <p class="lead text-muted mx-auto" style="max-width: 600px;">
+            N'hésitez pas à prendre contact avec notre équipe. Nous vous répondrons personnellement dans les meilleurs délais pour toutes vos questions.
+        </p>
+    </div>
+
+    <div class="row g-5 align-items-stretch">
+        
+        <div class="col-12 col-lg-7">
+            <div class="card border-0 rounded-4 shadow-lg h-100 p-lg-4 bg-light">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold mb-4 text-dark">Envoyez-nous un message</h5>
+                    {{ form_start(form) }}
+                        
+                        {{ form_widget(form) }}
+                        
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+            <div class="card border-0 rounded-4 h-100 bg-secondary text-white shadow-lg">
+                <div class="card-body p-4 p-lg-5">
+                    <h4 class="fw-bolder mb-3">Online-Shop</h4>
+                    <p class="mb-4 opacity-75">
+                        Besoin d'une réponse immédiate ? Trouvez nos coordonnées ci-dessous.
+                    </p>
+                    
+                    <ul class="list-unstyled text-white">
+                        <li class="d-flex align-items-start mb-4">
+                            <i class="bi bi-telephone-fill fs-4 me-3"></i>
+                            <div>
+                                <h6 class="mb-1 fw-bold">Appelez-nous</h6>
+                                <a href="tel:0102030405" class="text-white text-decoration-none opacity-75">01-02-03-04-05</a>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-start mb-4">
+                            <i class="bi bi-envelope-fill fs-4 me-3"></i>
+                            <div>
+                                <h6 class="mb-1 fw-bold">Écrivez-nous</h6>
+                                <a href="mailto:contact@info.fr" class="text-white text-decoration-none opacity-75">contact@info.fr</a>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-start mb-4">
+                            <i class="bi bi-geo-alt-fill fs-4 me-3"></i>
+                            <div>
+                                <h6 class="mb-1 fw-bold">Notre adresse</h6>
+                                <p class="mb-0 opacity-75">2 rue du... / 00000 Ville, France</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <hr class="text-white opacity-50 my-4">
+
+                    <h6 class="text-uppercase fw-bolder mb-3">Nos horaires d'ouverture</h6>
+                    <div class="d-flex justify-content-between opacity-75 small mb-1">
+                        <span>Lundi - Vendredi</span>
+                        <span>9h00 - 18h00</span>
+                    </div>
+                    <div class="d-flex justify-content-between opacity-75 small">
+                        <span>Samedi</span>
+                        <span>10h00 - 14h00</span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .letter-spacing-2 {
+            letter-spacing: 2px;
+        }
+      
+        .card-body input, 
+        .card-body textarea, 
+        .card-body select {
+            border-radius: 0.5rem; 
+            padding: 0.75rem 1rem;
+        }
+    </style>
+{% endblock %}

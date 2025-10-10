@@ -1,0 +1,128 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<!-- ======= Carousel ======= -->
+	
+	<div id="myCarousel" class="carousel slide " data-bs-ride="carousel">
+		{% if headers|length > 1 %}
+			<div class="carousel-indicators">
+				{% for key, header in headers %}
+					<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="{{ key }}" {% if key == 0 %} class="active" aria-current="true" {% endif %} aria-label="Slide {{ key + 1 }}"></button>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		<div class="carousel-inner">
+			{% for key, header in headers %}
+				<div class="carousel-item {% if key == 0 %}active{% endif %}">
+					<img src="/uploads/{{ header.illustration }}" class="d-block w-100 img-fluid object-fit-cover" alt="{{ header.title }}" style="max-height: 85vh;">
+					<div class="carousel-caption text-start bg-dark bg-opacity-25 rounded p-4" style="width:320px;">
+						<h1 class="fw-bold text-light">{{ header.title }}</h1>
+						<p class="text-light opacity-75 mb-3">{{ header.content }}</p>
+						<a class="btn btn-lg btn-secondary text-white shadow-sm" href="{{ header.buttonLink }}">{{ header.buttonTitle }}</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+
+		{% if headers|length > 1 %}
+			<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		{% endif %}
+	</div>
+
+	<!-- ======= Best Sellers Section ======= -->
+	<div class="container marketing my-5">
+		<h3 class="text-center text-primary-emphasis mb-4">Nos Meilleures Choix</h3>
+		<div class="row justify-content-center gy-4 **gx-3**">
+			{% for product in productsInHomePage %}
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+							<div class="card border-0 shadow-sm rounded-4 text-center h-100 transition-all" style="transition: transform 0.3s ease, box-shadow 0.3s ease; ">
+								<a href="{{ path('app_product', {'slug': product.slug}) }}" class="text-decoration-none text-dark">
+								
+									<img style="max-width:200px ;min-width:200px ;min-height: 225px; max-height:225px;  border-radius: 10%; image-rendering: optimizeQuality;" src="uploads/{{ product.illustration }}" alt="{{ product.name }}" class="img-fluid rounded-top-4" style="height: 220px; object-fit: cover;">
+									<div class="card-body">
+										<h6 class="text-primary-emphasis mb-1 fw-semibold">{{ product.name }}</h6>
+										<p class="small text-muted text-truncate-2" style="height: 50px;">
+											{{ product.description|striptags|slice(0, 40) }}
+										</p>
+
+										<div class="d-flex justify-content-center align-items-center gap-2">
+											<span class="fw-bold text-primary-emphasis">{{ product.price|price }}</span>
+											<a href="{{ path('app_cart_add', { id: product.id }) }}">
+												
+												<i data-feather="shopping-bag"></i>
+											</a>
+											
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+
+		{% endfor %}
+	</div>
+</div>
+
+<!-- ======= Category Sections ======= -->
+<div class="container my-5">
+<h2 class='text-center text-primary-emphasis mb-4'>Nos Categorie</h2>
+	{% for category in allCategories %}
+		{% if category.products|length > 0 %}
+			<div class="category-section mb-5">
+				<div class="d-flex justify-content-between align-items-center mb-3">
+					<h4 class="text-primary-emphasis mb-0">
+						<a href="{{ path('app_category', {slug: category.slug}) }}" class="text-decoration-none text-primary-emphasis">
+							{{ category.name|capitalize }}s
+						</a>
+					</h4>
+
+					<a href="{{ path('app_category', {slug: category.slug}) }}"
+					   class="btn btn-sm text-light border border-light bg-secondary  rounded-5 
+					   {# bg-opacity-75  #}
+					   shadow-sm px-3 py-1">
+						Voir plus
+					</a>
+
+
+				</div>
+
+				<div class="row justify-content-start g-4">
+					{% for product in category.products|slice(0, 6, true) %}
+
+
+						<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+							<div class="card border-0 shadow-sm rounded-4 text-center h-100 transition-all" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+								<a href="{{ path('app_product', {'slug': product.slug}) }}" class="text-decoration-none text-dark">
+									<img style="max-width:200px ;min-width:200px ;min-height: 225px; max-height:225px;  border-radius: 10%; image-rendering: optimizeQuality;" src="uploads/{{ product.illustration }}" alt="{{ product.name }}" class="img-fluid rounded-top-4" style="height: 220px; object-fit: cover;">
+									<div class="card-body">
+										<h6 class="text-primary-emphasis mb-1 fw-semibold">{{ product.name }}</h6>
+										<p class="small text-muted text-truncate-2" style="height: 50px;">
+											{{ product.description|striptags|slice(0, 40) }}
+										</p>
+
+										<div class="d-flex justify-content-center align-items-center gap-2">
+											<span class="fw-bold text-primary-emphasis">{{ product.price|price }}</span>
+											<a href="{{ path('app_cart_add', { id: product.id }) }}">
+												{# <img src="{{ asset('assets/img/icons8-add-to-cart-64.png') }}" alt="Ajouter au panier" width="36" height="36"> #}
+												<i data-feather="shopping-bag"></i>
+											</a>
+											
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endif %}
+	{% endfor %}
+</div>{% endblock %}

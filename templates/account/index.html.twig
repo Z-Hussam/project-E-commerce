@@ -1,0 +1,84 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord | Mon compte{% endblock %}
+
+{% block body %}
+
+    <div class="container my-5 py-3">
+        
+        <div class="text-center mb-5">
+            <h1 class="fw-bolder text-dark">Espace Membre</h1>
+            <h3 class="lead text-primary">Bienvenue, <strong class="fw-bold">{{ app.user.firstname }}</strong>! 👋</h3>
+            <p class="text-muted">Retrouvez un aperçu de vos activités récentes.</p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-12 col-lg-3">
+                {# Inclut le menu du compte  #}
+                {% include "/account/menu.html.twig" %}
+            </div>
+
+            <div class="col-12 col-lg-9">
+                <div class=" p-4 rounded-4 shadow-sm">
+                    
+                    <h4 class="fw-bold mb-4 text-dark border-bottom pb-2">
+                        <i class="bi bi-clock-history me-2 text-primary"></i> Mes dernières commandes
+                    </h4>
+                    
+                    {% if orders|length == 0 %}
+                        <div class="alert alert-info p-4 my-3 rounded-3" role="alert">
+                            <h5 class="alert-heading fw-bold"><i class="bi bi-box me-2"></i> Aucune commande passée</h5>
+                            <p class="mb-0">
+                                Il semble que votre historique soit vide. Commencez vos achats dès maintenant !
+                            </p>
+                        </div>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped align-middle">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th scope="col" class="col-1">N° Commande</th>
+                                        <th scope="col" class="col-3">Statut</th>
+                                        <th scope="col" class="col-3">Date</th>
+                                        <th scope="col" class="col-2">Total TTC</th>
+                                        <th scope="col" class="col-1"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for order in orders %}
+                                        <tr>
+                                            <td><span class="fw-bold">{{ order.id }}</span></td>
+                                            
+                                            <td>
+                                                {# En supposant que state.html.twig restitue un badge ou un composant similaire#}
+                                                {{ include('admin/state.html.twig',{field:{'value':order.state} }) }}
+                                            </td>
+                                            
+                                            <td class="text-muted small">{{ order.createdAt|date("d/m/Y") }}</td>
+                                            
+                                            <td><span class="fw-bold text-primary">{{ order.getTotalWt|price }}</span></td>
+                                            
+                                            <td>
+                                                <a href="{{ path('app_account_order', {id_order: order.id}) }}" 
+                                                   class="btn btn-sm btn-outline-dark"
+                                                   aria-label="Voir les détails de la commande {{ order.id }}">
+                                                    <i class="bi bi-arrow-right-circle-fill"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div> 
+
+
+{% endblock %}

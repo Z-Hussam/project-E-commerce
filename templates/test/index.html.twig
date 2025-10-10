@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestController!
+{% endblock %}
+
+{% block body %}
+
+	<div class=" container mx-auto my-5">
+		{{form(form)}}
+		<div class="container">
+		
+			{% for product in products %}
+		{{ dump(product) }}
+			{% endfor %}
+		</div>
+		</div>
+
+		
+	{% endblock %}
+
