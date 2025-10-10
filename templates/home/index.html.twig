@@ -2,7 +2,7 @@
 
 {% block body %}
 
-	<!-- ======= Carousel ======= -->
+	
 	
 	<div id="myCarousel" class="carousel slide " data-bs-ride="carousel">
 		{% if headers|length > 1 %}
@@ -38,7 +38,7 @@
 		{% endif %}
 	</div>
 
-	<!-- ======= Best Sellers Section ======= -->
+	
 	<div class="container marketing my-5">
 		<h3 class="text-center text-primary-emphasis mb-4">Nos Meilleures Choix</h3>
 		<div class="row justify-content-center gy-4 **gx-3**">
@@ -71,7 +71,7 @@
 	</div>
 </div>
 
-<!-- ======= Category Sections ======= -->
+
 <div class="container my-5">
 <h2 class='text-center text-primary-emphasis mb-4'>Nos Categorie</h2>
 	{% for category in allCategories %}
@@ -85,9 +85,7 @@
 					</h4>
 
 					<a href="{{ path('app_category', {slug: category.slug}) }}"
-					   class="btn btn-sm text-light border border-light bg-secondary  rounded-5 
-					   {# bg-opacity-75  #}
-					   shadow-sm px-3 py-1">
+					   class="btn btn-sm text-light border border-light bg-secondary  rounded-5 shadow-sm px-3 py-1">
 						Voir plus
 					</a>
 
@@ -111,7 +109,6 @@
 										<div class="d-flex justify-content-center align-items-center gap-2">
 											<span class="fw-bold text-primary-emphasis">{{ product.price|price }}</span>
 											<a href="{{ path('app_cart_add', { id: product.id }) }}">
-												{# <img src="{{ asset('assets/img/icons8-add-to-cart-64.png') }}" alt="Ajouter au panier" width="36" height="36"> #}
 												<i data-feather="shopping-bag"></i>
 											</a>
 											

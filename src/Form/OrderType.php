@@ -43,7 +43,7 @@ class OrderType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => ' Confirmer et Continuer ',
                 'attr' => [
-                'class' => 'btn text-white bg-dark bg-opacity-75 btn-lg fw-bold py-3 shadow btn-block  w-100'
+                'class' => 'btn text-white bg-dark btn-sm py-3  btn-block  w-100'
                 ]
             ]);
     }

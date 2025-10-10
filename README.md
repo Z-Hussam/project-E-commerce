@@ -48,3 +48,6 @@ Création de compte, connexion, déconnexion, modification des informations util
 
 # FAQ : 
 - Page pour les Fraquantly asked question : posibilité de repondre coté adminstration
+
+# Carrousel
+- Ajouter des images au carrousel depuis la section d'en-tête d'administration

@@ -72,7 +72,7 @@ class SearchType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Recherchez',
                 'attr' => [
-                    'class' => 'btn-block btn-secondary  text-white'
+                    'class' => 'btn-block btn-dark  text-white'
                 ]
             ]);
     }

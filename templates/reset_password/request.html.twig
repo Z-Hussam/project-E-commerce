@@ -8,21 +8,20 @@
             
             <div class="col-sm-10 col-md-8 col-lg-6">
 
-                {# Flasha ffichage de message - positionné à l'extérieur de la carte pour un placement d'alerte standard #}
+                
                 {% for flash_error in app.flashes('reset_password_error') %}
                     <div class="alert alert-danger text-center mb-4" role="alert">
                         {{ flash_error }}
                     </div>
                 {% endfor %}
 
-                {# Enveloppez le formulaire dans une carte pour un aspect propre et professionnel#}
-                <div class="card shadow-lg rounded-4 p-4 p-md-5">
+                <div class=" p-4 p-md-5">
                     <h1 class="text-center mb-4 text-primary-emphasis">Réinitialisez votre mot de passe</h1>
 
                     {{ form_start(requestForm) }}
 
                     <div class="mb-3">
-                        {# Afficher le champ e-mail avec la classe de contrôle de formulaire#}
+
                         {{ form_row(requestForm.email, {
                             label: 'Votre adresse e-mail',
                             attr: {

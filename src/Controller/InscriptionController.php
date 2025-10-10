@@ -26,13 +26,7 @@ class InscriptionController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Votre compte est créé, veuillez vous conneceter.');
 
-            //Envoi d'un email de confirmation d'inscription 
-            $mail = new Mail();
-            $vars = [
-                'firstname' => $user->getFirstname()
-            ];
-
-            $mail->send($user->getUserIdentifier(), $user->getFirstname() . ' ' . $user->getLastname(), 'Bienvenu dans la boutique Shope on line',  'inscription.html', $vars);
+           
             
             return $this->redirectToRoute('app_login');
         }

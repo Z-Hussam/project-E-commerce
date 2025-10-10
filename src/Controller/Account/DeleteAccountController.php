@@ -60,7 +60,7 @@ final class DeleteAccountController extends AbstractController
 
         
         
-        // $ordersDetails_to_remove =[];
+        
         foreach($orders_to_remove as $order)
         {
         $ordersDetails_to_remove= $this->orderDetailsRepository->findBy(['myOrder'=>$order]);
@@ -76,20 +76,20 @@ final class DeleteAccountController extends AbstractController
         }
         
         
-        // dd($user);
+        
 
         
-        // return $this->redirectToRoute('app_logout');    
+        
         $this->em->remove($user);
         $this->em->flush();
 
-        $this->addFlash('success', 'Votre compte est supprimé, nous sommes triste de vous voir paritir notre chère client client qui achète beaucoup de notre boutique hahahahahahahahahahah .');
+        $this->addFlash('success', 'Votre compte est supprimé.');
 
 
         
     }
-        //   return  $this->redirect('app_logout');
+
     return $this->redirectToRoute('app_login');    
-    // return $this->render('account/delete_account/deleted_account.html.twig');
+    
 }
 }

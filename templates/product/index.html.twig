@@ -23,7 +23,7 @@
             
             <div class="col-md-6 d-flex flex-column">
                 
-                {# Breadcrumb / catégorie Info #}
+            {# Breadcrumb / catégorie Info #}
                 <small class="text-muted mb-2">
                     <i class="bi bi-tag-fill me-1"></i>
                     <a href="{{path('app_category',{slug : product.category.slug})}}" class="text-decoration-none text-muted">
@@ -31,18 +31,18 @@
                     </a>
                 </small>
                 
-                {# Nom et prix du produit#}
+                
                 <h1 class="fw-bolder text-dark mb-2">{{product.name}}</h1>
                 <span class="d-block mb-4 h3 fw-bold text-secondary">{{product.priceWt|price }}</span>
                 
-                {# Description #}
+                
                 <p class="mb-5 text-secondary lead">{{product.description|raw}}</p>
 
 
                 
                 <div class="d-flex align-items-center mt-auto pt-3 border-top">
                     
-                    {# Bouton ajouter au panier#}
+                    
                     <a href="{{path('app_cart_add',{id:product.id})}}" 
                        class="btn btn-secondary fw-bold flex-grow-1 me-3 py-2">
                        <i class="bi bi-cart-plus me-2"></i> Ajouter au panier
@@ -50,7 +50,7 @@
                     
 
                     {% if app.user %}
-                        {# {% set icon_classes = "btn btn-lg" %} #}
+                        
 
                         {% if product in app.user.wishlists %}
                             
@@ -97,13 +97,13 @@
         <hr class="my-5">
         
         
-        {# Section des commentaires  #}
+        
         <div class="row">
             <div class="col-12">
                 <h3 class="text-dark border-bottom pb-2 mb-4">Commentaires ({{ comments|length }})</h3>
             {% for comment in comments %}
             {% if  comment.author != app.user %}
-              {# Ajouter un lien de commentaire#}
+              
                 <div class="mb-4">
                     <a href="{{ path('app_comments', { productId:product.id }) }}" class="btn btn-sm btn-outline-secondary fw-bold">
                         <i class="bi bi-chat-left-text me-1"></i> Ajouter un commentaire
@@ -119,12 +119,12 @@
                         <p class="mb-0">Il n'y a pas encore de commentaires sur ce produit. Soyez le premier !</p>
                     </div>
                 {% else %}
-                    {# Liste des commentaires #}
+                    
                     {% for comment in comments %}
                         <div class="card mb-3 shadow-sm border-0">
                             <div class="card-body">
                                 <div class="d-flex align-items-start">
-                                    {# Avatar Placeholder #}
+                                    
                                   
 
                                          <div class="avatar-icon m-2" 
