@@ -34,7 +34,7 @@ class Mail
             'Messages' => [
                 [
                     'From' => [
-                        'Email' => "teste4all4@gmail.com",
+                        'Email' => "dev-246@outlook.com",
                         'Name' => "Shop-online"
                     ],
                     'To' => [

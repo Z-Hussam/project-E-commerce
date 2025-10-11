@@ -16,17 +16,20 @@ class ContactController extends AbstractController
     {
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             
             $email = new Mail();
+
             $vars = [
                 'prenom' => $form->get('prenom')->getData(),
                 'nom' =>  $form->get('nom')->getData(),
                 'email' =>  $form->get('email')->getData(),
                 'content' =>  $form->get('content')->getData(),
             ];
+
             $email->send(
-                'user-c09f1e19-d691-49cd-b1a6-b980d304578e@mailslurp.net',
+                'dev-246@outlook.com',
                 'Admin',
                 'Client-contact',
                 'client-contact.html',
