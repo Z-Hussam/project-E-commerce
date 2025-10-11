@@ -42,12 +42,10 @@ Création de compte, connexion, déconnexion, modification des informations util
 - Envoyer des e-mails aux administrations
 
 # Carousel: 
-- choisir les imgages de carousel de le back-office :mage de fond
+- choisir les imgages de carousel de le back-office image de fond
 - URL du button : categorie/ le nome de la category 
 - Titre du button
 
 # FAQ : 
 - Page pour les Fraquantly asked question : posibilité de repondre coté adminstration
 
-# Carrousel
-- Ajouter des images au carrousel depuis la section Header d'administration
